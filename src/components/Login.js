@@ -7,7 +7,7 @@ import firebase_init from "../firebase_init";
 //style
 import { Form, Button } from "react-bootstrap"
 
-export default function Login() {
+export default function Login({ authenticate, wrong }) {
     //form handler
     const [formHandler, setFormHandler] = useState({
         email: "",
@@ -25,14 +25,7 @@ export default function Login() {
 
     const login = (e) => {
         e.preventDefault();
-        const auth = getAuth(firebase_init);
-
-        createUserWithEmailAndPassword(auth, formHandler.email, formHandler.password).then((userCred) => {
-            console.log(userCred.user)
-        })
-        .catch(err => {
-            console.log(err)
-        });
+        authenticate(formHandler.email, formHandler.password);
     }
 
     return (
@@ -44,10 +37,11 @@ export default function Login() {
                         <Form.Label>Email Address:</Form.Label>
                         <Form.Control type="email" placeholder="Enter email" name="email" onChange={inputEvent} />
                     </Form.Group>
-                    <Form.Group className="mb-5">
+                    <Form.Group className={wrong ? "mb-1": "mb-3"}>
                         <Form.Label>Password:</Form.Label>
                         <Form.Control type="password" placeholder="Enter password" name="password" onChange={inputEvent} />
                     </Form.Group>
+                    {wrong && <p className="mb-3 text-center text-danger">Wrong E-mail or Password</p>}
                     <Button variant="primary" type="submit">
                         Login
                     </Button>
