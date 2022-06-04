@@ -7,6 +7,7 @@ import firebase_init from "../firebase_init";
 
 //import components
 import Login from "../components/Login"
+import Console from "../components/Console";
 
 //auth provider
 const auth = getAuth(firebase_init);
@@ -48,8 +49,7 @@ export default function Admin() {
 
     if (user) return (
         <>
-            <h1>Logged in</h1>
-            <button onClick={logout}>SIGNOUT</button>
+            <Console />
         </>
     )
 
